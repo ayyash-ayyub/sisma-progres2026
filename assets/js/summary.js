@@ -49,8 +49,15 @@ function escapeHtml(str) {
 
 function init() {
   subscribeToData(
-    ({ meta, modules }) => renderTimeline(meta, modules),
-    () => document.getElementById('loadError').classList.remove('hidden')
+    ({ meta, modules }) => {
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('timelineWrap').classList.remove('hidden');
+      renderTimeline(meta, modules);
+    },
+    () => {
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('loadError').classList.remove('hidden');
+    }
   );
 }
 

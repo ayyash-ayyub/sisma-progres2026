@@ -25,7 +25,15 @@
       <a href="index.html" class="px-3 py-2 border-2 border-black text-sm font-medium bg-white hover:bg-black hover:text-white shrink-0">&larr; Kembali ke Dashboard</a>
     </header>
 
-    <div class="bg-white border-2 border-black overflow-x-auto">
+    <!-- Loading state -->
+    <div id="loadingState" class="flex items-center justify-center gap-2 py-16 border-2 border-black bg-white">
+      <span class="w-3 h-3 bg-black animate-pulse"></span>
+      <span class="w-3 h-3 bg-black animate-pulse [animation-delay:150ms]"></span>
+      <span class="w-3 h-3 bg-black animate-pulse [animation-delay:300ms]"></span>
+      <span class="ml-2 text-sm font-mono text-slate-500">Memuat data...</span>
+    </div>
+
+    <div id="timelineWrap" class="hidden bg-white border-2 border-black overflow-x-auto">
       <div id="timelineTable"></div>
     </div>
 

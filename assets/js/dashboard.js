@@ -7,6 +7,7 @@ let bound = false;
 function init() {
   subscribeToData(
     ({ meta, modules }) => {
+      document.getElementById('loadingState').classList.add('hidden');
       allModules = modules;
       renderHero(meta, modules);
       renderGrid();
@@ -17,6 +18,7 @@ function init() {
       }
     },
     () => {
+      document.getElementById('loadingState').classList.add('hidden');
       document.getElementById('moduleGrid').innerHTML =
         `<p class="text-black text-sm sm:col-span-2 lg:col-span-3">Gagal memuat data dari Firestore. Cek koneksi internet atau konfigurasi Firebase.</p>`;
     }
