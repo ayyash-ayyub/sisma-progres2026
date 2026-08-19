@@ -1,4 +1,4 @@
-import { fetchAllData } from './data-service.js';
+import { subscribeToData } from './data-service.js';
 
 function addDays(date, days) {
   const d = new Date(date);
@@ -47,16 +47,14 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-async function init() {
-  let data;
-  try {
-    data = await fetchAllData();
-  } catch (e) {
-    document.getElementById('loadError').classList.remove('hidden');
-    return;
-  }
+function init() {
+  subscribeToData(
+    ({ meta, modules }) => renderTimeline(meta, modules),
+    () => document.getElementById('loadError').classList.remove('hidden')
+  );
+}
 
-  const { meta, modules } = data;
+function renderTimeline(meta, modules) {
   const weeks = buildWeeks(meta.startDate, meta.deadline);
   const monthGroups = groupByMonth(weeks);
   const weekCount = weeks.length;

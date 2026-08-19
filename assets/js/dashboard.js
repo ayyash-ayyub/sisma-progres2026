@@ -1,25 +1,26 @@
-import { fetchAllData } from './data-service.js';
+import { subscribeToData } from './data-service.js';
 
 let currentFilter = 'semua';
 let allModules = [];
+let bound = false;
 
-async function init() {
-  let data;
-  try {
-    data = await fetchAllData();
-  } catch (e) {
-    document.getElementById('moduleGrid').innerHTML =
-      `<p class="text-black text-sm sm:col-span-2 lg:col-span-3">Gagal memuat data dari Firestore. Cek koneksi internet atau konfigurasi Firebase.</p>`;
-    return;
-  }
-
-  const { meta, modules } = data;
-  allModules = modules;
-
-  renderHero(meta, modules);
-  renderGrid();
-  bindFilters();
-  bindModal();
+function init() {
+  subscribeToData(
+    ({ meta, modules }) => {
+      allModules = modules;
+      renderHero(meta, modules);
+      renderGrid();
+      if (!bound) {
+        bindFilters();
+        bindModal();
+        bound = true;
+      }
+    },
+    () => {
+      document.getElementById('moduleGrid').innerHTML =
+        `<p class="text-black text-sm sm:col-span-2 lg:col-span-3">Gagal memuat data dari Firestore. Cek koneksi internet atau konfigurasi Firebase.</p>`;
+    }
+  );
 }
 
 function renderHero(meta, modules) {
