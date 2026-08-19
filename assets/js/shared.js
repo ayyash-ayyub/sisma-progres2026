@@ -25,8 +25,19 @@ const STATUS_META = {
   }
 };
 
+const FEATURE_PROGRESS_WEIGHT = {
+  selesai: 1,
+  sedang: 0.5,
+  lewat_batas: 0.5,
+  belum_mulai: 0
+};
+
 function statusMeta(status) {
   return STATUS_META[status] || STATUS_META.belum_mulai;
+}
+
+function featureWeight(status) {
+  return FEATURE_PROGRESS_WEIGHT[status] ?? 0;
 }
 
 function formatDate(iso) {
@@ -48,18 +59,20 @@ function todayIso() {
 }
 
 function calcProgress(modules) {
-  const allFeatures = modules.flatMap(m => m.features || []);
-  if (!allFeatures.length) return 0;
-  const done = allFeatures.filter(f => f.status === 'selesai').length;
-  return Math.round((done / allFeatures.length) * 100);
+  const weights = modules.flatMap(m =>
+    (m.features || []).map(f => m.status === 'selesai' ? 1 : featureWeight(f.status))
+  );
+  if (!weights.length) return 0;
+  const sum = weights.reduce((a, b) => a + b, 0);
+  return Math.round((sum / weights.length) * 100);
 }
 
 function calcModuleProgress(mod) {
   if (mod.status === 'selesai') return 100;
   const features = mod.features || [];
   if (!features.length) return 0;
-  const done = features.filter(f => f.status === 'selesai').length;
-  return Math.round((done / features.length) * 100);
+  const sum = features.reduce((total, f) => total + featureWeight(f.status), 0);
+  return Math.round((sum / features.length) * 100);
 }
 
 function uid(prefix = 'm') {
