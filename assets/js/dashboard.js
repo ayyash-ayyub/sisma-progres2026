@@ -36,6 +36,9 @@ function renderHero(meta, modules) {
   const elapsed = Math.min(total, Math.max(0, daysBetween(meta.startDate, today)));
   const pct = Math.round((elapsed / total) * 100);
   document.getElementById('dateProgressBar').style.width = pct + '%';
+
+  document.getElementById('totalModules').textContent = modules.length;
+  document.getElementById('totalFeatures').textContent = modules.reduce((sum, m) => sum + (m.features || []).length, 0);
 }
 
 function renderGrid() {
