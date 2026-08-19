@@ -58,21 +58,18 @@ function todayIso() {
   return d.toISOString().slice(0, 10);
 }
 
-function calcProgress(modules) {
-  const weights = modules.flatMap(m =>
-    (m.features || []).map(f => m.status === 'selesai' ? 1 : featureWeight(f.status))
-  );
-  if (!weights.length) return 0;
-  const sum = weights.reduce((a, b) => a + b, 0);
-  return Math.round((sum / weights.length) * 100);
-}
-
 function calcModuleProgress(mod) {
   if (mod.status === 'selesai') return 100;
   const features = mod.features || [];
   if (!features.length) return 0;
   const sum = features.reduce((total, f) => total + featureWeight(f.status), 0);
   return Math.round((sum / features.length) * 100);
+}
+
+function calcProgress(modules) {
+  if (!modules.length) return 0;
+  const sum = modules.reduce((total, m) => total + calcModuleProgress(m), 0);
+  return Math.round(sum / modules.length);
 }
 
 function uid(prefix = 'm') {
