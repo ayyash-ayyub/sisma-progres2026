@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SISMA — Panel Admin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  input, select, textarea { border-radius: 0 !important; border-width: 2px !important; border-color: #000 !important; }
+  input:focus, select:focus, textarea:focus { outline: none; box-shadow: none; }
+</style>
+</head>
+<body class="bg-stone-100 text-black min-h-screen">
+
+  <!-- Login screen -->
+  <div id="loginScreen" class="max-w-sm mx-auto px-5 py-24">
+    
+    <h1 class="font-display text-2xl font-700 mb-1">Syududu</h1>
+    <p class="text-sm text-slate-600 mb-6">khusus sahabat VIkram</p>
+    <form id="loginForm" class="space-y-3">
+      <label class="block text-xs text-slate-600">Email
+        <input id="loginEmail" type="email" required class="mt-1 w-full text-sm" />
+      </label>
+      <label class="block text-xs text-slate-600">Password
+        <input id="loginPassword" type="password" required class="mt-1 w-full text-sm" />
+      </label>
+      <p id="loginError" class="text-xs text-black font-bold h-4"></p>
+      <button type="submit" class="w-full px-3 py-2 border-2 border-black text-sm font-medium bg-black text-white hover:bg-white hover:text-black">Masuk</button>
+    </form>
+  </div>
+
+  <!-- Admin screen -->
+  <div id="adminScreen" class="hidden">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8 py-10">
+
+      <header class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <p class="font-mono text-xs tracking-widest text-black uppercase mb-2">Panel Internal</p>
+          <h1 class="font-display text-2xl sm:text-3xl font-700">Kelola Progres Modul SISMA</h1>
+        </div>
+        <button id="btnLogout" class="px-3 py-2 border-2 border-black text-sm font-medium bg-white hover:bg-black hover:text-white shrink-0">Keluar</button>
+      </header>
+
+      <!-- Toolbar -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button id="btnReload" class="px-3 py-2 border-2 border-black text-sm font-medium bg-white hover:bg-black hover:text-white">Muat ulang dari Firestore</button>
+        <button id="btnAdd" class="px-3 py-2 border-2 border-black text-sm font-medium bg-white hover:bg-black hover:text-white">+ Tambah Modul</button>
+        <button id="btnExport" class="px-3 py-2 border-2 border-black text-sm font-medium bg-black text-white hover:bg-white hover:text-black ml-auto">Export data.json</button>
+      </div>
+
+      <!-- Meta info -->
+      <section class="bg-white border-2 border-black p-4 sm:p-5 mb-8">
+        <h2 class="font-display font-600 text-sm text-black uppercase tracking-wide mb-3">Informasi Proyek</h2>
+        <div class="grid sm:grid-cols-3 gap-3">
+          <label class="text-xs text-slate-600">Nama proyek
+            <input id="metaProject" class="mt-1 w-full text-sm" />
+          </label>
+          <label class="text-xs text-slate-600">Mulai
+            <input id="metaStart" type="date" class="mt-1 w-full text-sm font-mono" />
+          </label>
+          <label class="text-xs text-slate-600">Batas akhir
+            <input id="metaDeadline" type="date" class="mt-1 w-full text-sm font-mono" />
+          </label>
+        </div>
+      </section>
+
+      <!-- Modules list -->
+      <div id="moduleList" class="space-y-4"></div>
+
+      <p id="statusMsg" class="text-xs font-mono text-black mt-4 h-4"></p>
+    </div>
+  </div>
+
+<!-- Card template -->
+<template id="cardTemplate">
+  <div class="module-card bg-white border-2 border-black p-4 sm:p-5">
+    <div class="grid sm:grid-cols-2 gap-3 mb-3">
+      <label class="text-xs text-slate-600 sm:col-span-2">Nama modul
+        <input data-field="name" class="mt-1 w-full text-sm font-display font-600" />
+      </label>
+      <label class="text-xs text-slate-600">Status
+        <select data-field="status" class="mt-1 w-full text-sm">
+          <option value="belum_mulai">Belum Mulai</option>
+          <option value="sedang">Sedang Dikerjakan</option>
+          <option value="lewat_batas">Lewat Batas Waktu</option>
+          <option value="selesai">Selesai</option>
+        </select>
+      </label>
+      <label class="text-xs text-slate-600">Target selesai
+        <input data-field="dueDate" type="date" class="mt-1 w-full text-sm font-mono" />
+      </label>
+      <label class="text-xs text-slate-600 sm:col-span-2">Catatan
+        <textarea data-field="note" rows="2" class="mt-1 w-full text-sm" placeholder="mis. mundur karena penambahan fitur..."></textarea>
+      </label>
+    </div>
+
+    <div class="border-t-2 border-black pt-3 mb-3">
+      <div class="flex items-center justify-between mb-2">
+        <h4 class="text-xs font-medium text-black uppercase tracking-wide">Fitur / Sub-modul</h4>
+        <button data-action="add-feature" class="text-xs font-medium border-2 border-black px-2 py-1 bg-white hover:bg-black hover:text-white">+ Tambah Fitur</button>
+      </div>
+      <div data-field="featureList" class="space-y-2"></div>
+      <p data-field="featureEmpty" class="text-xs text-slate-500 py-2 hidden">Belum ada fitur.</p>
+    </div>
+
+    <div class="flex items-center justify-between pt-2 border-t-2 border-black">
+      <span class="text-[11px] font-mono text-slate-500">Diperbarui: <span data-field="updatedAtLabel"></span></span>
+      <button data-action="delete" class="text-xs font-medium border-2 border-black px-2 py-1 bg-white hover:bg-black hover:text-white">Hapus modul</button>
+    </div>
+  </div>
+</template>
+
+<!-- Feature row template -->
+<template id="featureTemplate">
+  <div class="feature-row flex items-center gap-2">
+    <input data-feature-field="name" class="flex-1 text-sm" placeholder="Nama fitur" />
+    <select data-feature-field="status" class="text-xs w-36">
+      <option value="belum_mulai">Belum Mulai</option>
+      <option value="sedang">Sedang Dikerjakan</option>
+      <option value="lewat_batas">Lewat Batas</option>
+      <option value="selesai">Selesai</option>
+    </select>
+    <button data-feature-action="delete" class="border-2 border-black w-7 h-7 flex items-center justify-center text-sm leading-none bg-white hover:bg-black hover:text-white shrink-0">&times;</button>
+  </div>
+</template>
+
+<script src="assets/js/shared.js"></script>
+<script type="module" src="assets/js/admin.js"></script>
+</body>
+</html>

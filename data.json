@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "project": "SISMA",
+    "description": "progres pengembangan modul Aplikasi SISMA",
+    "startDate": "2026-08-01",
+    "deadline": "2026-12-20",
+    "lastUpdated": "2026-08-19"
+  },
+  "modules": [
+    {
+      "id": "m1",
+      "name": "KP4 & BPJS",
+      "status": "sedang",
+      "dueDate": "2026-08-16",
+      "note": "menunggu arahan garlin",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m2",
+      "name": "MinIO Object Storage",
+      "status": "belum_mulai",
+      "dueDate": "2026-08-09",
+      "note": "vikram banyak alasan.\nsakitlah,\nadministrasilah, etc etc",
+      "updatedAt": "2026-08-19",
+      "features": [
+        {
+          "id": "fwefmwu0",
+          "name": "vikram jomok",
+          "status": "lewat_batas",
+          "updatedAt": "2026-08-19"
+        },
+        {
+          "id": "f8vq70ub",
+          "name": "modul vikram di dev terus",
+          "status": "lewat_batas",
+          "updatedAt": "2026-08-19"
+        },
+        {
+          "id": "fiu61xt8",
+          "name": "modul x udah jadi tapi vikram malas",
+          "status": "belum_mulai",
+          "updatedAt": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "name": "Kontrak PUTPK",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m4",
+      "name": "Kenaikan Gaji Berkala",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m5",
+      "name": "Cuti Digital",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m6",
+      "name": "Integrasi Remunerasi Expenditure",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m7",
+      "name": "Kenaikan Pangkat",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m8",
+      "name": "Ujian Dinas",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m9",
+      "name": "Penyesuaian Ijazah",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m10",
+      "name": "PAK",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m11",
+      "name": "Konversi Nilai SK/Panutan",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    },
+    {
+      "id": "m12",
+      "name": "API External",
+      "status": "belum_mulai",
+      "dueDate": "",
+      "note": "",
+      "updatedAt": "2026-08-19",
+      "features": []
+    }
+  ]
+}
